@@ -8,7 +8,8 @@ Work Complete:
 - Setup a message store with the Asos fork of [Simple Event Store](https://github.com/ASOS/SimpleEventStore), NEventStore seemed like a bit much overhead for a throwaway project. May re-visit later.
 
 Todo:
-- Put a button on the UI that causes messages to be created
-- Hook the ViewData up to the UI
-- Wrtie some Aggregators
-- Write some Components
+- Put a button on the UI that causes messages to be created.
+- Hook the ViewData up to the UI.
+- Wrtie some Aggregators.
+- Write some Components.
+- Switch to using CosmosDB as the storage engine for the EventStore.
