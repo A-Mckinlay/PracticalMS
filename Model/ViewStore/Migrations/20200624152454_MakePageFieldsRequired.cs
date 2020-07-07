@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Model.Migrations
+namespace Model.ViewStore.Migrations
 {
     public partial class MakePageFieldsRequired : Migration
     {

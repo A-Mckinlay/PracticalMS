@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Model;
 
-namespace Model.Migrations
+namespace Model.ViewStore.Migrations
 {
     [DbContext(typeof(RelationalStoreContext))]
     [Migration("20200624152454_MakePageFieldsRequired")]

@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using Model.Entities;
+using Model.ViewStore.Entities;
 
-namespace Model
+namespace Model.ViewStore
 {
     public class RelationalStoreContext : DbContext
     {

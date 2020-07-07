@@ -4,8 +4,8 @@ using System.Dynamic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Model;
-using Model.Entities;
+using Model.ViewStore;
+using Model.ViewStore.Entities;
 using Newtonsoft.Json;
 
 namespace pmnetcore.Controllers
