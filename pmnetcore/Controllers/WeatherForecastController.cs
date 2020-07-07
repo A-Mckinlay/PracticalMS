@@ -4,6 +4,7 @@ using System.Dynamic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Model.MessageStore;
 using Model.ViewStore;
 using Model.ViewStore.Entities;
 using Newtonsoft.Json;
@@ -14,7 +15,8 @@ namespace pmnetcore.Controllers
     [Route("[controller]")]
     public class ViewsController : ControllerBase
     {
-        private readonly RelationalStoreContext _context;
+        private readonly RelationalStoreContext _viewStore;
+        private readonly IMessageStore _messageStore;
 
         private static readonly string[] Summaries = new[]
         {
@@ -23,10 +25,11 @@ namespace pmnetcore.Controllers
 
         private readonly ILogger<ViewsController> _logger;
 
-        public ViewsController(ILogger<ViewsController> logger, RelationalStoreContext context)
+        public ViewsController(ILogger<ViewsController> logger, RelationalStoreContext viewStoreContext, IMessageStore messageStore)
         {
             _logger = logger;
-            _context = context;
+            _viewStore = viewStoreContext;
+            _messageStore = messageStore;
         }
 
         [HttpGet]
@@ -35,13 +38,20 @@ namespace pmnetcore.Controllers
             dynamic sampleObject = new ExpandoObject();
             sampleObject.key = "value";
 
-            await _context.AddAsync(new Page
+            var page = new Page
             {
                 Id = Guid.NewGuid(),
                 PageData = JsonConvert.SerializeObject(sampleObject),
                 PageName = "IndexPage"
-            });
-            await _context.SaveChangesAsync();
+            };
+
+            await _viewStore.AddAsync(page);
+            await _viewStore.SaveChangesAsync();
+
+            var streamId = "streamIdentifier";
+            await _messageStore.AppendToStream(streamId, 0, new SimpleEventStore.EventData(Guid.NewGuid(), page));
+            var dataFromMsgStore = await _messageStore.ReadStreamForwards(streamId);
+            _logger.Log(LogLevel.Critical, "Read from msg store", dataFromMsgStore.ToString());
 
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
