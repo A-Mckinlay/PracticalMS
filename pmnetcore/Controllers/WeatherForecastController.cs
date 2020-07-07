@@ -51,7 +51,6 @@ namespace pmnetcore.Controllers
             var streamId = "streamIdentifier";
             await _messageStore.AppendToStream(streamId, 0, new SimpleEventStore.EventData(Guid.NewGuid(), page));
             var dataFromMsgStore = await _messageStore.ReadStreamForwards(streamId);
-            _logger.Log(LogLevel.Critical, "Read from msg store", dataFromMsgStore.ToString());
 
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
