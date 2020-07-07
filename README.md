@@ -12,4 +12,4 @@ Todo:
 - Hook the ViewData up to the UI.
 - Wrtie some Aggregators.
 - Write some Components.
-- Switch to using CosmosDB as the storage engine for the EventStore.
+- Switch to using CosmosDB as the storage engine for the EventStore. 
